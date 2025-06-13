@@ -15,10 +15,9 @@ echo "Cài compose..."
 sudo apt-get install docker-compose-plugin
 
 mkdir traefik_data
-mkdir mysql_data
-mkdir n8n_data
+docker volume create traefik_data
 
-docker network create web
-docker-compose up -d
+sudo docker network create web
+sudo docker-compose up -d
 
 # Cai n8n
