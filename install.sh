@@ -16,5 +16,9 @@ sudo apt-get install docker-compose-plugin
 
 mkdir traefik_data
 mkdir mysql_data
+mkdir n8n_data
+
+docker network create web
+docker-compose up -d
 
 # Cai n8n
