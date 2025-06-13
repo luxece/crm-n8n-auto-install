@@ -24,8 +24,6 @@ echo \
 echo "Cập nhật apt và cài Docker..."
 sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-echo "======= Docker installed ======="
 
 echo "Cài compose..."
 sudo apt-get install docker-compose-plugin
-echo "======= Docker-Compose installed ======="
