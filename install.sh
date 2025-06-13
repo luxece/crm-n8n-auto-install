@@ -1,12 +1,13 @@
 #!/bin/bash
 
 echo "Gỡ cài đặt Docker cũ..."
+sudo docker system prune -a --volumes -f
 sudo apt-get remove -y docker docker-engine docker.io containerd runc
 
 echo "Cập nhật hệ thống..."
 sudo apt-get update
 
-echo "🔧 Cài các gói cần thiết..."
+echo "Cài các gói cần thiết..."
 sudo apt-get install -y ca-certificates curl gnupg lsb-release
 
 echo "Tạo thư mục keyrings..."
@@ -27,3 +28,5 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
 echo "Cài compose..."
 sudo apt-get install docker-compose-plugin
+
+# Cai n8n
