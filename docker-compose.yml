@@ -2,59 +2,32 @@ version: "3.8"
 
 services:
   traefik:
-    image: traefik:v2.10
+    image: traefik:latest
+    restart: always
     command:
+      - "--api=true"
       - "--api.insecure=true"
       - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
       - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
-      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
-      - "--certificatesresolvers.letsencrypt.acme.email=your-email@example.com"
-      - "--certificatesresolvers.letsencrypt.acme.storage=/acme.json"
+      - "--certificatesresolvers.mytlschallenge.acme.tlschallenge=true"
+      - "--certificatesresolvers.mytlschallenge.acme.email=${SSL_EMAIL}"
+      - "--certificatesresolvers.mytlschallenge.acme.storage=/letsencrypt/acme.json"
     ports:
       - "80:80"
       - "443:443"
     volumes:
-      - "./traefik/traefik.yml:/etc/traefik/traefik.yml"
-      - "./traefik/acme.json:/acme.json"
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
-    networks:
-      - web
-
-  db:
-    image: mysql:5.7
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: testdb
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-    volumes:
-      - mysql_data:/var/lib/mysql
-    networks:
-      - web
-
-  app:
-    build: ./app
-    port:
-      - "3000:3000"
-    environment:
-      DB_HOST: db
-      DB_USER: user
-      DB_PASSWORD: password
-      DB_NAME: testdb
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.node.rule=Host(`node.yourdomain.com`)"
-      - "traefik.http.routers.node.entrypoints=websecure"
-      - "traefik.http.routers.node.tls.certresolver=letsencrypt"
-    depends_on:
-      - db
+      - traefik_data:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - web
 
 volumes:
-  mysql_data:
+  traefik_data:
+    external: true
 
 networks:
   web:
