@@ -24,3 +24,6 @@ echo \
 # Cập nhật và cài đặt Docker
 sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+
+# Dưới đây là ví dụ cài đặt Docker-Compose Ubuntu:
+sudo apt-get install docker-compose-plugin
