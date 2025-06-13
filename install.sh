@@ -2,6 +2,7 @@
 
 # Gỡ cài đặt Docker cũ nếu có
 sudo apt-get remove -y docker docker-engine docker.io containerd runc
+echo "======= Docker uninstalled ======="
 
 # Cập nhật hệ thống
 sudo apt-get update
@@ -24,6 +25,8 @@ echo \
 # Cập nhật và cài đặt Docker
 sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+echo "======= Docker installed ======="
 
 # Dưới đây là ví dụ cài đặt Docker-Compose Ubuntu:
 sudo apt-get install docker-compose-plugin
+echo "======= Docker-Compose installed ======="
